@@ -1,0 +1,303 @@
+<!-- Session Metric Cards -->
+<style>
+    .metric-card {
+        background-color: rgba(31, 41, 55, 0.5);
+        backdrop-filter: blur(12px);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1rem;
+    }
+    
+    .metric-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+    }
+    
+    .metric-label {
+        font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .heart-rate-bar {
+        height: 0.5rem;
+        background-color: rgb(34, 197, 94);
+        border-radius: 9999px;
+        transition: all 300ms;
+    }
+    
+    .heart-rate-bg {
+        height: 0.5rem;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 9999px;
+    }
+
+    .mode-selector {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .mode-button {
+        flex: 1;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 200ms;
+    }
+
+    .mode-button.active {
+        background-color: rgb(99, 102, 241);
+        color: white;
+    }
+
+    .mode-button:not(.active) {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .mode-button:not(.active):hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .fun-comparison {
+        margin-top: 1rem;
+        font-size: 0.875rem;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.8);
+        font-style: italic;
+    }
+
+    .rank-info {
+        margin-top: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .zone-bar {
+        height: 0.5rem;
+        border-radius: 9999px;
+        background-color: rgba(255, 255, 255, 0.1);
+        overflow: hidden;
+    }
+
+    .zone-progress {
+        height: 100%;
+        border-radius: 9999px;
+        background: linear-gradient(to right, rgb(74, 222, 128), rgb(250, 204, 21), rgb(248, 113, 113));
+        transition: width 300ms ease;
+    }
+
+    .zone-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.4);
+        margin-top: 0.25rem;
+    }
+</style>
+
+<!-- Arcade Mode Card -->
+<div class="metric-card" data-session-type="Arcade">
+    <div class="flex flex-col space-y-4">
+        <!-- Mode Selector -->
+        <div class="mode-selector">
+            <button class="mode-button active" data-mode="power" onclick="window.switchArcadeMode('power')">
+                Power Mode
+            </button>
+            <button class="mode-button" data-mode="speed" onclick="window.switchArcadeMode('speed')">
+                Speed Mode
+            </button>
+        </div>
+
+        <!-- Power Mode Content -->
+        <div id="powerModeContent">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                        <i data-feather="zap" class="w-5 h-5 text-white/90"></i>
+                    </div>
+                    <h3 class="text-sm text-white/70">Single Punch Analysis</h3>
+                </div>
+                <div class="text-xs px-2 py-1 rounded-full bg-indigo-500/20 text-indigo-200">
+                    Arcade Mode
+                </div>
+            </div>
+
+            <!-- Force Metrics -->
+            <div class="grid grid-cols-2 gap-4 mt-4">
+                <div class="p-3 rounded-lg bg-white/5">
+                    <div class="text-sm text-white/50 mb-1">Max Force</div>
+                    <div class="text-2xl font-bold text-white" id="maxForce">0.0G</div>
+                </div>
+                <div class="p-3 rounded-lg bg-white/5">
+                    <div class="text-sm text-white/50 mb-1">Impact Duration</div>
+                    <div class="text-2xl font-bold text-white" id="duration">0ms</div>
+                </div>
+            </div>
+
+            <!-- Personal Best -->
+            <div class="flex items-center justify-between text-sm p-2 rounded-lg bg-white/5 mt-4">
+                <span class="text-white/50">Personal Best:</span>
+                <span class="font-semibold text-white" id="personalBest">0.0G</span>
+            </div>
+
+            <!-- Fun Comparison -->
+            <div class="fun-comparison" id="forceComparison">
+                Throw a punch to see how you compare!
+            </div>
+
+            <!-- Rank Info -->
+            <div class="rank-info">
+                <span id="globalRank">Global: --</span>
+                <span id="countryRank">Country: --</span>
+                <span id="ageRank">Age Group: --</span>
+            </div>
+        </div>
+
+        <!-- Speed Mode Content -->
+        <div id="speedModeContent" class="hidden">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                        <i data-feather="zap" class="w-5 h-5 text-white/90"></i>
+                    </div>
+                    <h3 class="text-sm text-white/70">Speed Test</h3>
+                </div>
+                <div class="text-xs px-2 py-1 rounded-full bg-indigo-500/20 text-indigo-200">
+                    Arcade Mode
+                </div>
+            </div>
+
+            <!-- Timer -->
+            <div class="text-center mt-4">
+                <div class="text-sm text-white/50">Time Remaining</div>
+                <div class="text-4xl font-bold text-white" id="speedTimer">30</div>
+            </div>
+
+            <!-- Speed Metrics -->
+            <div class="grid grid-cols-2 gap-4 mt-4">
+                <div class="p-3 rounded-lg bg-white/5">
+                    <div class="text-sm text-white/50 mb-1">Punch Count</div>
+                    <div class="text-2xl font-bold text-white" id="punchCount">0</div>
+                </div>
+                <div class="p-3 rounded-lg bg-white/5">
+                    <div class="text-sm text-white/50 mb-1">Punches/Second</div>
+                    <div class="text-2xl font-bold text-white" id="punchRate">0.0</div>
+                </div>
+            </div>
+
+            <!-- Fun Comparison -->
+            <div class="fun-comparison" id="speedComparison">
+                Start punching to test your speed!
+            </div>
+
+            <!-- Rank Info -->
+            <div class="rank-info">
+                <span id="speedGlobalRank">Global: --</span>
+                <span id="speedCountryRank">Country: --</span>
+                <span id="speedAgeRank">Age Group: --</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Heart Rate Zone Card -->
+<div class="metric-card" data-session-type="Workout">
+    <div class="flex flex-col space-y-4">
+        <!-- Header -->
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                    <i data-feather="heart" class="w-5 h-5 text-white/90"></i>
+                </div>
+                <h3 class="text-sm text-white/70">Heart Rate</h3>
+            </div>
+            <div class="text-lg font-bold text-white" id="currentHR">--</div>
+        </div>
+
+        <!-- Zone Bar -->
+        <div class="zone-bar">
+            <div class="zone-progress" id="hrZoneProgress"></div>
+        </div>
+
+        <!-- Zone Labels -->
+        <div class="zone-labels">
+            <span>Zone <span id="currentZone">--</span></span>
+            <span id="zonePercentage">--%</span>
+        </div>
+    </div>
+</div>
+
+<!-- Challenge Mode Card -->
+<div class="metric-card" data-session-type="Challenge">
+    <div class="flex flex-col space-y-4">
+        <!-- Header -->
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                    <i data-feather="target" class="w-5 h-5 text-white/90"></i>
+                </div>
+                <h3 class="text-sm text-white/70">Challenge</h3>
+            </div>
+            <div class="text-xs px-2 py-1 rounded-full bg-indigo-500/20 text-indigo-200">
+                Challenge Mode
+            </div>
+        </div>
+
+        <!-- Challenge Info -->
+        <div class="text-center">
+            <div class="text-sm text-white/60">Target Force</div>
+            <div class="text-4xl font-bold text-white" id="targetForce">10.0G</div>
+            <div class="text-sm text-white/60 mt-2">Attempts Remaining</div>
+            <div class="text-2xl font-bold text-white" id="attemptsLeft">3</div>
+        </div>
+
+        <!-- Challenge Progress -->
+        <div class="flex items-center justify-between text-sm p-2 rounded-lg bg-white/5">
+            <span class="text-white/50">Best Attempt:</span>
+            <span class="font-semibold text-white" id="bestAttempt">0.0G</span>
+        </div>
+    </div>
+</div>
+
+<!-- Fight Mode Card -->
+<div class="metric-card" data-session-type="Fight">
+    <div class="flex flex-col space-y-4">
+        <!-- Header -->
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                    <i data-feather="box" class="w-5 h-5 text-white/90"></i>
+                </div>
+                <h3 class="text-sm text-white/70">Fight</h3>
+            </div>
+            <div class="text-xs px-2 py-1 rounded-full bg-indigo-500/20 text-indigo-200">
+                Fight Mode
+            </div>
+        </div>
+
+        <!-- Fight Timer -->
+        <div class="text-center">
+            <div class="text-sm text-white/60">Time Remaining</div>
+            <div class="text-4xl font-bold text-white" id="fightTimer">60</div>
+        </div>
+
+        <!-- Fight Metrics -->
+        <div class="grid grid-cols-2 gap-4">
+            <div class="p-3 rounded-lg bg-white/5">
+                <div class="text-sm text-white/50 mb-1">Total Force</div>
+                <div class="text-2xl font-bold text-white" id="totalForce">0.0G</div>
+            </div>
+            <div class="p-3 rounded-lg bg-white/5">
+                <div class="text-sm text-white/50 mb-1">Avg Force</div>
+                <div class="text-2xl font-bold text-white" id="avgForce">0.0G</div>
+            </div>
+        </div>
+    </div>
+</div>

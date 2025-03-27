@@ -1,0 +1,133 @@
+<!-- Session Details View -->
+<div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+        <div class="flex items-center gap-4">
+            <a href="#/" class="w-10 h-10 bg-white/10 rounded-full backdrop-blur flex items-center justify-center text-white hover:bg-white/20 transition">
+                <i data-feather="arrow-left" class="w-5 h-5"></i>
+            </a>
+            <div>
+                <h1 class="text-2xl font-bold text-white">Session Details</h1>
+                <div class="text-white/60" id="sessionDate">--</div>
+            </div>
+        </div>
+        <button class="share-btn w-10 h-10 bg-white/10 rounded-full backdrop-blur flex items-center justify-center text-white hover:bg-white/20 transition">
+            <i data-feather="share-2" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- Session Type -->
+    <div class="card mb-6">
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                <i data-feather="zap" class="w-6 h-6 text-blue-400"></i>
+            </div>
+            <div>
+                <div class="text-lg font-semibold text-white" id="sessionType">--</div>
+                <div class="text-white/60" id="sessionDuration">--</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats Grid -->
+    <div class="grid grid-cols-2 gap-4 mb-8">
+        <div class="stat-card">
+            <div class="text-lg text-white/60">Max Force</div>
+            <div class="text-3xl font-bold text-white" id="maxForce">--</div>
+            <div class="text-sm text-white/40">Personal Best</div>
+        </div>
+        <div class="stat-card">
+            <div class="text-lg text-white/60">Avg Force</div>
+            <div class="text-3xl font-bold text-white" id="avgForce">--</div>
+            <div class="text-sm text-white/40">This Session</div>
+        </div>
+        <div class="stat-card">
+            <div class="text-lg text-white/60">Total Punches</div>
+            <div class="text-3xl font-bold text-white" id="punchCount">--</div>
+            <div class="text-sm text-white/40">Count</div>
+        </div>
+        <div class="stat-card">
+            <div class="text-lg text-white/60">Heart Rate</div>
+            <div class="text-3xl font-bold text-white" id="heartRate">--</div>
+            <div class="text-sm text-white/40">Avg BPM</div>
+        </div>
+    </div>
+
+    <!-- Force Over Time -->
+    <div class="mb-8">
+        <h2 class="text-xl font-semibold text-white mb-4">Force Over Time</h2>
+        <div class="card">
+            <div class="graph-container bg-gray-900/50">
+                <canvas id="forceGraph"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Heart Rate -->
+    <div class="mb-8">
+        <h2 class="text-xl font-semibold text-white mb-4">Heart Rate</h2>
+        <div class="card">
+            <div class="graph-container bg-gray-900/50">
+                <canvas id="heartRateGraph"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Stats -->
+    <div class="space-y-4">
+        <h2 class="text-xl font-semibold text-white mb-4">Additional Stats</h2>
+        <div class="card">
+            <div class="flex justify-between items-center">
+                <div class="text-white/60">Calories Burned</div>
+                <div class="text-white font-medium" id="caloriesBurned">--</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="flex justify-between items-center">
+                <div class="text-white/60">Total Force</div>
+                <div class="text-white font-medium" id="totalForce">--</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="flex justify-between items-center">
+                <div class="text-white/60">Challenge Score</div>
+                <div class="text-white font-medium" id="challengeScore">--</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { SessionController } from '../scripts/sessionController.js';
+    
+    let currentSession = null;
+
+    // Get session type from URL parameters or default to 'workout'
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionType = urlParams.get('type') || 'workout';
+
+    // Initialize session
+    document.addEventListener('DOMContentLoaded', () => {
+        currentSession = new SessionController(sessionType);
+    });
+
+    // Expose control methods to window for button clicks
+    window.startSession = () => {
+        if (currentSession) {
+            currentSession.startRealtimeUpdates();
+        }
+    };
+
+    window.stopSession = () => {
+        if (currentSession) {
+            currentSession.stopRealtimeUpdates();
+        }
+    };
+
+    // Cleanup on page unload
+    window.addEventListener('unload', () => {
+        if (currentSession) {
+            currentSession.cleanup();
+        }
+    });
+</script>

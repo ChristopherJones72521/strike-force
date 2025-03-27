@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Strike Force</title>
+    <link rel="stylesheet" href="/styles/design-system.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="/styles/app.css">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    
+    <!-- Third-party Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    
+    <!-- Chart.js Configuration -->
+    <script>
+        Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+        Chart.defaults.color = 'rgba(255, 255, 255, 0.6)';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    </script>
+
+    <style>
+        :root {
+            --nav-height: 5rem;
+            --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+            --sf-primary: #2979FF;
+            --sf-secondary: #3D5AFE;
+            --sf-success: #00C853;
+            --sf-warning: #FFD600;
+            --sf-error: #FF1744;
+            --sf-background: #121212;
+            --sf-surface: #1E1E1E;
+            --sf-card: rgba(40, 40, 44, 0.2);
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            background-color: var(--sf-background);
+            color: white;
+            overflow-x: hidden;
+        }
+        body {
+            background: linear-gradient(180deg, #1a202c 0%, #0f1219 100%) fixed;
+        }
+        #app {
+            height: 100%;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: calc(var(--nav-height) + var(--safe-area-bottom));
+        }
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-height);
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+            padding-bottom: var(--safe-area-bottom);
+        }
+        .card {
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .gradient-separator {
+            height: 1px;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0.3),
+                rgba(255, 255, 255, 0)
+            );
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- App container -->
+    <div id="app"></div>
+    
+    <!-- Bottom navigation -->
+    <nav class="flex justify-around items-center">
+        <a href="#/" class="flex flex-col items-center justify-center text-white/60 hover:text-white" id="nav-home">
+            <i data-feather="home" class="w-6 h-6"></i>
+            <span class="text-xs mt-1">Home</span>
+        </a>
+        <a href="#/history" class="flex flex-col items-center justify-center text-white/60 hover:text-white" id="nav-history">
+            <i data-feather="activity" class="w-6 h-6"></i>
+            <span class="text-xs mt-1">History</span>
+        </a>
+        <a href="#/leaderboard" class="flex flex-col items-center justify-center text-white/60 hover:text-white" id="nav-leaderboard">
+            <i data-feather="award" class="w-6 h-6"></i>
+            <span class="text-xs mt-1">Leaderboard</span>
+        </a>
+    </nav>
+    
+    <!-- Data Models -->
+    <script src="/data/models/SessionType.js"></script>
+    <script src="/data/models/Session.js"></script>
+    
+    <!-- Data Utils -->
+    <script src="/data/utils/HeartRateProcessor.js"></script>
+    <script src="/data/utils/SessionGenerator.js"></script>
+    
+    <!-- Core Components -->
+    <script src="/components/core/SFMetricCard.js"></script>
+    <script src="/components/form/SFToggle.js"></script>
+    <script src="/components/form/SFSegmentedControl.js"></script>
+    
+    <!-- Chart Components -->
+    <script src="/components/charts/SFForceChart.js"></script>
+    
+    <!-- Section Components -->
+    <script src="/components/sections/SFForceSection.js"></script>
+    <script src="/components/sections/SFSessionSection.js"></script>
+    <script src="/components/sections/SFQuickStatsSection.js"></script>
+    
+    <!-- App Logic -->
+    <script src="/scripts/app.js"></script>
+</body>
+</html>

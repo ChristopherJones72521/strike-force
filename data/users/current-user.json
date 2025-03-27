@@ -1,0 +1,49 @@
+{
+  "id": "user_cj",
+  "name": "Chris Johnson",
+  "email": "chris@example.com",
+  "country": "US",
+  "dateJoined": "2025-01-15T08:00:00.000Z",
+  "stats": {
+    "maxForce": 9.2,
+    "avgForce": 7.1,
+    "totalSessions": 156,
+    "totalPunches": 4328,
+    "fastestPunch": 12.3,
+    "caloriesBurned": 12450,
+    "rankings": {
+      "global": 42,
+      "country": 8,
+      "local": 1
+    }
+  },
+  "achievements": [
+    {
+      "id": "power_prodigy",
+      "name": "Power Prodigy",
+      "description": "Achieve a force of over 8Gs",
+      "type": "power_milestone",
+      "dateUnlocked": "2025-02-01T15:23:11.000Z"
+    },
+    {
+      "id": "speed_demon",
+      "name": "Speed Demon",
+      "description": "Record over 100 punches in 30 seconds",
+      "type": "speed_milestone",
+      "dateUnlocked": "2025-02-15T09:45:30.000Z"
+    },
+    {
+      "id": "consistent_striker",
+      "name": "Consistent Striker",
+      "description": "Complete 5 sessions in 5 days",
+      "type": "consistency",
+      "dateUnlocked": "2025-03-01T18:12:00.000Z"
+    }
+  ],
+  "preferences": {
+    "units": "metric",
+    "shareData": true,
+    "notifications": true,
+    "healthSync": true
+  }
+}

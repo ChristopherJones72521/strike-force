@@ -1,0 +1,96 @@
+<!-- Home View -->
+<div class="h-full">
+    <div class="container mx-auto px-4 py-6">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold italic" style="background-image: linear-gradient(to right, #3B82F6, #06B6D4); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; padding-right: 4px;">Strike Force</h1>
+            <a href="#/profile" class="text-white/60 hover:text-white">
+                <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
+                    <i data-feather="user" class="w-5 h-5"></i>
+                </div>
+            </a>
+        </div>
+
+        <!-- Force Section - Primary Card -->
+        <div class="mb-6">
+            <sf-force-section class="card p-0 overflow-hidden block">
+                <sf-force-chart slot="chart" class="h-64"></sf-force-chart>
+                <sf-segmented-control slot="control" class="w-full">
+                    <button slot="option" value="day">D</button>
+                    <button slot="option" value="week" selected>W</button>
+                    <button slot="option" value="month">M</button>
+                    <button slot="option" value="year">Y</button>
+                    <button slot="option" value="all">All</button>
+                </sf-segmented-control>
+            </sf-force-section>
+        </div>
+
+        <!-- Section Divider -->
+        <div class="border-t border-gray-700 my-6"></div>
+
+        <!-- Quick Stats Section -->
+        <div class="mb-6">
+            <div class="mb-4">
+                <h2 class="text-xl font-bold pb-2 mb-2" style="background-image: linear-gradient(to right, #3B82F6, #06B6D4); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; padding-right: 4px;">Quick stats</h2>
+                <div class="w-20 h-px bg-gray-700"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-5">
+                <!-- Hardest Punch Card -->
+                <div class="card p-4 h-28">
+                    <sf-metric-card id="max-force">
+                        <h3 slot="title" class="text-white/60 text-sm">Hardest punch</h3>
+                        <div slot="value" class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300">14.7G</div>
+                    </sf-metric-card>
+                </div>
+
+                <!-- Challenges Won Card -->
+                <div class="card p-4 h-28">
+                    <sf-metric-card id="challenges-won">
+                        <h3 slot="title" class="text-white/60 text-sm">Challenges won</h3>
+                        <div slot="value" class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-300">23</div>
+                    </sf-metric-card>
+                </div>
+
+                <!-- Fastest Hands Card -->
+                <div class="card p-4 h-28">
+                    <sf-metric-card id="fastest-hands">
+                        <h3 slot="title" class="text-white/60 text-sm">Fastest hands</h3>
+                        <div slot="value" class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-violet-300">360</div>
+                    </sf-metric-card>
+                </div>
+
+                <!-- Fights Won Card -->
+                <div class="card p-4 h-28">
+                    <sf-metric-card id="fights-won">
+                        <h3 slot="title" class="text-white/60 text-sm">Fights won</h3>
+                        <div slot="value" class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-red-300">65</div>
+                    </sf-metric-card>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Divider -->
+        <div class="border-t border-gray-700 my-6"></div>
+
+        <!-- Recent Sessions -->
+        <div class="mb-6">
+            <div class="mb-4">
+                <h2 class="text-xl font-bold pb-2 mb-2" style="background-image: linear-gradient(to right, #9F7AEA, #A78BFA); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; padding-right: 4px;">Recent sessions</h2>
+                <div class="w-20 h-px bg-gray-700"></div>
+            </div>
+            <div class="card p-5">
+                <div class="recent-sessions-content">
+                    <sf-session-section></sf-session-section>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="#/history" class="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium">View more session history</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initialize Feather icons
+    feather.replace();
+</script>

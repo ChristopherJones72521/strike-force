@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Details</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+<body>
+    <div class="session-details-container">
+        <header class="session-header">
+            <h1>Session Details</h1>
+            <nav class="navigation-controls">
+                <button class="back-button" onclick="history.back()">Back</button>
+            </nav>
+        </header>
+
+        <main class="session-content">
+            <section class="session-info">
+                <h2 class="session-title">Training Session</h2>
+                <div class="session-metadata">
+                    <p><strong>Date:</strong> <span id="sessionDate">Loading...</span></p>
+                    <p><strong>Duration:</strong> <span id="sessionDuration">Loading...</span></p>
+                    <p><strong>Location:</strong> <span id="sessionLocation">Loading...</span></p>
+                </div>
+            </section>
+
+            <section class="session-details">
+                <h3>Session Overview</h3>
+                <div class="details-grid">
+                    <div class="detail-card">
+                        <h4>Participants</h4>
+                        <ul id="participantsList" class="participants-list">
+                            <!-- Participants will be dynamically loaded here -->
+                        </ul>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <h4>Equipment Required</h4>
+                        <ul id="equipmentList" class="equipment-list">
+                            <!-- Equipment will be dynamically loaded here -->
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="session-notes">
+                <h3>Notes</h3>
+                <div id="sessionNotes" class="notes-content">
+                    <!-- Session notes will be loaded here -->
+                </div>
+            </section>
+
+            <section class="action-buttons">
+                <button class="primary-button" id="editSession">Edit Session</button>
+                <button class="secondary-button" id="shareSession">Share</button>
+                <button class="danger-button" id="cancelSession">Cancel Session</button>
+            </section>
+        </main>
+    </div>
+
+    <script src="../scripts/sessionDetails.js"></script>
+</body>
+</html>

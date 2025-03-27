@@ -1,0 +1,48 @@
+:root {
+  /* Colors - following iOS 17 system colors */
+  --sf-primary: #007AFF;
+  --sf-secondary: #5856D6;
+  --sf-success: #34C759;
+  --sf-warning: #FF9500;
+  --sf-danger: #FF3B30;
+  --sf-system-gray1: #8E8E93;
+  --sf-system-gray2: #AEAEB2;
+  --sf-system-gray3: #C7C7CC;
+  --sf-system-gray4: #D1D1D6;
+  --sf-system-gray5: #E5E5EA;
+  --sf-system-gray6: #F2F2F7;
+  
+  /* Typography - SF Pro Display metrics */
+  --sf-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+  --sf-title1-size: 28px;
+  --sf-title2-size: 22px;
+  --sf-title3-size: 20px;
+  --sf-headline-size: 17px;
+  --sf-body-size: 17px;
+  --sf-callout-size: 16px;
+  --sf-subhead-size: 15px;
+  --sf-footnote-size: 13px;
+  
+  /* Spacing - following iOS 8pt grid */
+  --sf-spacing-xs: 4px;
+  --sf-spacing-sm: 8px;
+  --sf-spacing-md: 16px;
+  --sf-spacing-lg: 24px;
+  --sf-spacing-xl: 32px;
+  
+  /* Border radius - matching iOS components */
+  --sf-radius-sm: 6px;
+  --sf-radius-md: 8px;
+  --sf-radius-lg: 12px;
+  --sf-radius-xl: 16px;
+  
+  /* Shadows */
+  --sf-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --sf-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --sf-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
+  
+  /* Animation */
+  --sf-transition-fast: 0.2s ease;
+  --sf-transition-normal: 0.3s ease;
+  --sf-transition-slow: 0.4s ease;
+}

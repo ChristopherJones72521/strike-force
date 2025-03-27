@@ -1,0 +1,95 @@
+{
+  "rankings": [
+    {
+      "id": "user_sl",
+      "name": "Sylvester Stallone",
+      "country": "US",
+      "maxForce": 12.4,
+      "totalSessions": 342,
+      "rank": 1,
+      "achievements": ["power_legend", "consistency_master", "challenge_champion"]
+    },
+    {
+      "id": "user_jc",
+      "name": "Jason Clarke",
+      "country": "UK",
+      "maxForce": 11.8,
+      "totalSessions": 289,
+      "rank": 2,
+      "achievements": ["power_master", "endurance_king"]
+    },
+    {
+      "id": "user_jl",
+      "name": "Jean-Claude Van Damme",
+      "country": "BE",
+      "maxForce": 11.5,
+      "totalSessions": 312,
+      "rank": 3,
+      "achievements": ["speed_demon", "power_master"]
+    },
+    {
+      "id": "user_ds",
+      "name": "Dolph Lundgren",
+      "country": "SE",
+      "maxForce": 11.2,
+      "totalSessions": 276,
+      "rank": 4,
+      "achievements": ["power_prodigy", "challenge_master"]
+    },
+    {
+      "id": "user_js",
+      "name": "Jason Statham",
+      "country": "UK",
+      "maxForce": 10.9,
+      "totalSessions": 298,
+      "rank": 5,
+      "achievements": ["speed_master", "endurance_pro"]
+    },
+    {
+      "id": "user_jc2",
+      "name": "Jackie Chan",
+      "country": "HK",
+      "maxForce": 10.7,
+      "totalSessions": 456,
+      "rank": 6,
+      "achievements": ["consistency_legend", "speed_master"]
+    },
+    {
+      "id": "user_tc",
+      "name": "Terry Crews",
+      "country": "US",
+      "maxForce": 10.5,
+      "totalSessions": 234,
+      "rank": 7,
+      "achievements": ["power_prodigy", "endurance_master"]
+    },
+    {
+      "id": "user_rh",
+      "name": "Randy Couture",
+      "country": "US",
+      "maxForce": 10.3,
+      "totalSessions": 289,
+      "rank": 8,
+      "achievements": ["power_master", "challenge_pro"]
+    },
+    {
+      "id": "user_jr",
+      "name": "Jet Li",
+      "country": "CN",
+      "maxForce": 10.1,
+      "totalSessions": 345,
+      "rank": 9,
+      "achievements": ["speed_legend", "consistency_master"]
+    },
+    {
+      "id": "user_ws",
+      "name": "Wesley Snipes",
+      "country": "US",
+      "maxForce": 9.9,
+      "totalSessions": 267,
+      "rank": 10,
+      "achievements": ["speed_master", "power_pro"]
+    }
+  ],
+  "lastUpdated": "2025-03-25T21:35:00.000Z"
+}

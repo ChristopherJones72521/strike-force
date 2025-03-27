@@ -1,0 +1,44 @@
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 inset-x-0 bg-gray-900/60 backdrop-blur-lg border-t border-white/10 z-50">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-around py-4">
+            <a href="#/" class="nav-link flex flex-col items-center p-2 text-white/60 hover:text-white transition-colors">
+                <i data-feather="home"></i>
+                <span class="text-xs mt-1">Home</span>
+            </a>
+            <a href="#/history" class="nav-link flex flex-col items-center p-2 text-white/60 hover:text-white transition-colors">
+                <i data-feather="activity"></i>
+                <span class="text-xs mt-1">History</span>
+            </a>
+            <a href="#/leaderboard" class="nav-link flex flex-col items-center p-2 text-white/60 hover:text-white transition-colors">
+                <i data-feather="award"></i>
+                <span class="text-xs mt-1">Leaderboard</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<script>
+// Update active link
+const updateActiveLink = () => {
+    const currentRoute = window.location.hash || '#/';
+    document.querySelectorAll('.nav-link').forEach(link => {
+        if (link.getAttribute('href') === currentRoute) {
+            link.classList.remove('text-white/60');
+            link.classList.add('text-white');
+        } else {
+            link.classList.add('text-white/60');
+            link.classList.remove('text-white');
+        }
+    });
+};
+
+// Set initial active state and listen for changes
+updateActiveLink();
+window.addEventListener('hashchange', updateActiveLink);
+
+// Initialize Feather icons
+if (window.feather) {
+    feather.replace();
+}
+</script>

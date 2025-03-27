@@ -1,0 +1,60 @@
+<!-- Leaderboard View -->
+<div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-white">Leaderboard</h1>
+    </div>
+
+    <!-- Filters -->
+    <div class="flex flex-wrap gap-4 mb-8">
+        <div class="flex-1 min-w-[200px]">
+            <select id="leaderboardType" class="w-full bg-gray-800/50 backdrop-blur-lg rounded-lg px-4 py-2 text-white border border-white/10">
+                <option value="force">Max Force</option>
+                <option value="speed">Punch Speed</option>
+                <option value="total">Total Force</option>
+            </select>
+        </div>
+        <div class="flex-1 min-w-[200px]">
+            <select id="timeRange" class="w-full bg-gray-800/50 backdrop-blur-lg rounded-lg px-4 py-2 text-white border border-white/10">
+                <option value="all">All Time</option>
+                <option value="month">This Month</option>
+                <option value="week">This Week</option>
+                <option value="today">Today</option>
+            </select>
+        </div>
+        <div class="flex-1 min-w-[200px]">
+            <select id="region" class="w-full bg-gray-800/50 backdrop-blur-lg rounded-lg px-4 py-2 text-white border border-white/10">
+                <option value="global">Global</option>
+                <option value="country">Country</option>
+                <option value="local">Local</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Your Rank Card -->
+    <div class="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 mb-8">
+        <h2 class="text-xl font-semibold text-white mb-4">Your Ranking</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+                <div class="text-sm text-white/60">Global Rank</div>
+                <div class="text-3xl font-bold text-white">#42</div>
+                <div class="text-sm text-white/60">Top 5%</div>
+            </div>
+            <div>
+                <div class="text-sm text-white/60">Country Rank</div>
+                <div class="text-3xl font-bold text-white">#8</div>
+                <div class="text-sm text-white/60">Top 3%</div>
+            </div>
+            <div>
+                <div class="text-sm text-white/60">Local Rank</div>
+                <div class="text-3xl font-bold text-white">#1</div>
+                <div class="text-sm text-white/60">Top 1%</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard List -->
+    <div class="space-y-4" id="leaderboardEntries">
+        <!-- Leaderboard entries will be inserted here -->
+    </div>
+</div>

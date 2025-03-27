@@ -1,0 +1,133 @@
+<!-- Session Card Component -->
+<template id="sessionCardTemplate">
+    <a href="#" class="session-history-item block bg-white/10 backdrop-blur rounded-lg p-4 hover:bg-white/20 transition-colors">
+        <div class="flex items-center justify-between">
+            <div>
+                <div class="flex items-center gap-2">
+                    <i data-feather="activity" class="session-icon w-5 h-5 text-white/80"></i>
+                    <span class="session-type text-white font-medium">--</span>
+                    <span class="text-white/60">•</span>
+                    <span class="session-time text-white/60">--</span>
+                </div>
+                <div class="flex items-center gap-2 mt-1">
+                    <span class="text-white">Force: <span class="session-max-force">--</span></span>
+                    <span class="text-white/60">•</span>
+                    <span class="text-white">Count: <span class="session-punches">--</span></span>
+                </div>
+                <div class="text-white/60 text-sm mt-1">
+                    Time: <span class="session-duration">--</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="achievement-badge hidden">
+                    <i data-feather="award" class="w-5 h-5 text-yellow-400"></i>
+                </div>
+                <div class="personal-best-badge hidden px-2 py-1 rounded-full bg-green-500/20 text-green-300 text-xs font-medium">
+                    PB
+                </div>
+                <button class="share-btn p-2 hover:bg-white/10 rounded-full transition-colors">
+                    <i data-feather="share-2" class="w-5 h-5 text-white/60"></i>
+                </button>
+            </div>
+        </div>
+    </a>
+</template>
+
+<script>
+class SessionCard extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+    }
+
+    static get observedAttributes() {
+        return ['session-id', 'type', 'date', 'max-force', 'punch-count', 'duration', 'is-pb', 'has-achievement'];
+    }
+
+    connectedCallback() {
+        this.render();
+    }
+
+    attributeChangedCallback() {
+        this.render();
+    }
+
+    render() {
+        const template = document.getElementById('sessionCardTemplate');
+        const content = template.content.cloneNode(true);
+        
+        // Set session link
+        const card = content.querySelector('.session-history-item');
+        card.href = `#/session/${this.getAttribute('session-id')}`;
+        
+        // Set icon based on type
+        const icon = content.querySelector('.session-icon');
+        icon.setAttribute('data-feather', this.getSessionIcon(this.getAttribute('type')));
+        
+        // Set session info
+        content.querySelector('.session-type').textContent = this.formatSessionType(this.getAttribute('type'));
+        content.querySelector('.session-time').textContent = this.formatDate(this.getAttribute('date'));
+        content.querySelector('.session-max-force').textContent = this.getAttribute('max-force') + ' Gs';
+        content.querySelector('.session-punches').textContent = this.getAttribute('punch-count');
+        content.querySelector('.session-duration').textContent = this.getAttribute('duration');
+        
+        // Show badges if applicable
+        if (this.hasAttribute('is-pb')) {
+            content.querySelector('.personal-best-badge').classList.remove('hidden');
+        }
+        if (this.hasAttribute('has-achievement')) {
+            content.querySelector('.achievement-badge').classList.remove('hidden');
+        }
+        
+        // Add share handler
+        const shareBtn = content.querySelector('.share-btn');
+        shareBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.dispatchEvent(new CustomEvent('share', {
+                detail: { sessionId: this.getAttribute('session-id') }
+            }));
+        });
+        
+        // Clear existing content and append new
+        this.shadowRoot.innerHTML = '';
+        this.shadowRoot.appendChild(content);
+        
+        // Initialize Feather icons
+        if (window.feather) {
+            window.feather.replace();
+        }
+    }
+
+    getSessionIcon(type) {
+        const icons = {
+            'arcade_power': 'target',
+            'arcade_speed': 'zap',
+            'workout': 'activity',
+            'challenge': 'award',
+            'fight': 'box'
+        };
+        return icons[type] || 'activity';
+    }
+
+    formatSessionType(type) {
+        const types = {
+            'arcade_power': 'Arcade Power',
+            'arcade_speed': 'Arcade Speed',
+            'workout': 'Workout',
+            'challenge': 'Challenge',
+            'fight': 'Fight'
+        };
+        return types[type] || type;
+    }
+
+    formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric'
+        });
+    }
+}
+
+customElements.define('session-card', SessionCard);
+</script>

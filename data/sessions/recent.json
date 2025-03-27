@@ -1,0 +1,120 @@
+{
+  "sessions": [
+    {
+      "id": "session_1",
+      "userId": "user_cj",
+      "type": "arcade_power",
+      "date": "2025-03-25T20:15:00.000Z",
+      "duration": 60,
+      "maxForce": 9.2,
+      "avgForce": 7.8,
+      "punchCount": 12,
+      "heartRate": {
+        "avg": 125,
+        "max": 145
+      },
+      "caloriesBurned": 85,
+      "personalBest": true,
+      "forceComparison": "like a kangaroo!"
+    },
+    {
+      "id": "session_2",
+      "userId": "user_cj",
+      "type": "arcade_speed",
+      "date": "2025-03-25T18:30:00.000Z",
+      "duration": 30,
+      "maxForce": 8.1,
+      "avgForce": 6.9,
+      "punchCount": 45,
+      "heartRate": {
+        "avg": 135,
+        "max": 155
+      },
+      "caloriesBurned": 65,
+      "punchesPerSecond": 1.5,
+      "personalBest": false
+    },
+    {
+      "id": "session_3",
+      "userId": "user_cj",
+      "type": "workout",
+      "date": "2025-03-25T15:00:00.000Z",
+      "duration": 900,
+      "maxForce": 8.7,
+      "avgForce": 7.2,
+      "punchCount": 324,
+      "heartRate": {
+        "avg": 142,
+        "max": 165
+      },
+      "caloriesBurned": 450,
+      "segments": [
+        {
+          "duration": 300,
+          "type": "power",
+          "target": 8.0,
+          "actual": 8.7
+        },
+        {
+          "duration": 300,
+          "type": "speed",
+          "target": 100,
+          "actual": 124
+        },
+        {
+          "duration": 300,
+          "type": "endurance",
+          "target": 100,
+          "actual": 100
+        }
+      ],
+      "targetAchieved": true
+    },
+    {
+      "id": "session_4",
+      "userId": "user_cj",
+      "type": "fight",
+      "date": "2025-03-24T19:45:00.000Z",
+      "duration": 60,
+      "maxForce": 8.9,
+      "avgForce": 7.5,
+      "punchCount": 48,
+      "heartRate": {
+        "avg": 148,
+        "max": 172
+      },
+      "caloriesBurned": 95,
+      "totalForce": 360,
+      "opponent": "user_js",
+      "winner": "user_js"
+    },
+    {
+      "id": "session_5",
+      "userId": "user_cj",
+      "type": "challenge",
+      "date": "2025-03-24T16:20:00.000Z",
+      "duration": 180,
+      "maxForce": 9.1,
+      "avgForce": 7.8,
+      "punchCount": 89,
+      "heartRate": {
+        "avg": 138,
+        "max": 159
+      },
+      "caloriesBurned": 225,
+      "challengeId": "march_madness_2025",
+      "challengeScore": 892,
+      "ranking": 15,
+      "rewards": [
+        {
+          "id": "march_challenger",
+          "name": "March Challenger",
+          "description": "Completed the March Madness Challenge",
+          "type": "special",
+          "dateUnlocked": "2025-03-24T16:20:00.000Z"
+        }
+      ]
+    }
+  ],
+  "lastUpdated": "2025-03-25T21:35:00.000Z"
+}

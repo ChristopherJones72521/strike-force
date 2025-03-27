@@ -1,0 +1,74 @@
+<!-- Metric Card Component -->
+<!-- Base Card: Arcade & Workout -->
+<div class="metric-card bg-white/10 backdrop-blur rounded-xl p-4 transition-all hover:bg-white/15"
+     data-session-type="${sessionType}">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                <i data-feather="${icon}" class="w-5 h-5 text-white/90"></i>
+            </div>
+            <div>
+                <h3 class="text-sm text-white/70">${metric}</h3>
+                ${description ? `<p class="text-xs text-white/50">${description}</p>` : ''}
+            </div>
+        </div>
+        <div class="text-right">
+            <div class="text-lg font-semibold">${value}</div>
+        </div>
+    </div>
+</div>
+
+<!-- Challenge Card: Dual Layout -->
+<div class="metric-card bg-white/10 backdrop-blur rounded-xl p-4 transition-all hover:bg-white/15"
+     data-session-type="Challenge">
+    <div class="flex items-center justify-between">
+        <div class="flex-1">
+            <div class="flex items-center space-x-2 mb-2">
+                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                    <i data-feather="${icon}" class="w-5 h-5 text-white/90"></i>
+                </div>
+                <h3 class="text-sm text-white/70">${metric}</h3>
+            </div>
+            <div class="flex justify-between items-baseline">
+                <div>
+                    <div class="text-lg font-semibold">${value}</div>
+                    <div class="text-xs text-white/50">You</div>
+                </div>
+                <div class="text-center px-3">
+                    <div class="text-sm text-white/50">vs</div>
+                </div>
+                <div class="text-right">
+                    <div class="text-lg font-semibold">${secondaryValue}</div>
+                    <div class="text-xs text-white/50">Target</div>
+                </div>
+            </div>
+            ${description ? `<p class="text-xs text-white/50 mt-2">${description}</p>` : ''}
+        </div>
+    </div>
+</div>
+
+<!-- Fight Card: Dual Layout with Enhanced Comparison -->
+<div class="metric-card bg-white/10 backdrop-blur rounded-xl p-4 transition-all hover:bg-white/15"
+     data-session-type="Fight">
+    <div class="flex items-center justify-between">
+        <div class="flex-1">
+            <div class="flex items-center space-x-2 mb-3">
+                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                    <i data-feather="${icon}" class="w-5 h-5 text-white/90"></i>
+                </div>
+                <h3 class="text-sm text-white/70">${metric}</h3>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="text-center p-2 rounded-lg bg-white/5">
+                    <div class="text-lg font-semibold">${value}</div>
+                    <div class="text-xs text-white/50">You</div>
+                </div>
+                <div class="text-center p-2 rounded-lg bg-white/5">
+                    <div class="text-lg font-semibold">${secondaryValue}</div>
+                    <div class="text-xs text-white/50">Opponent</div>
+                </div>
+            </div>
+            ${description ? `<p class="text-xs text-white/50 mt-2 text-center">${description}</p>` : ''}
+        </div>
+    </div>
+</div>
