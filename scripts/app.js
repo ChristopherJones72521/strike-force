@@ -120,15 +120,15 @@ class App {
             const timeFilter = document.querySelector('sf-segmented-control');
             if (timeFilter) {
                 const selectedOption = timeFilter.querySelector('button[selected]');
-                const timeFrame = selectedOption ? selectedOption.value : 'week';
+                const timeFrame = selectedOption ? selectedOption.value || selectedOption.textContent : 'week';
                 
                 const filteredSessions = this.filterSessionsByTimeFrame(timeFrame);
                 const chartData = this.formatSessionDataForChart(filteredSessions);
                 
                 forceChart.updateChartData(chartData);
                 
-                // Listen for time filter changes
-                timeFilter.addEventListener('selection-change', (e) => {
+                // Listen for time filter changes - fix the event name to match what the component dispatches
+                timeFilter.addEventListener('change', (e) => {
                     const timeFrame = e.detail.value;
                     const filteredSessions = this.filterSessionsByTimeFrame(timeFrame);
                     const chartData = this.formatSessionDataForChart(filteredSessions);
@@ -325,32 +325,38 @@ class App {
         // Current date
         const now = new Date();
         
-        // Generate 20 sessions over the past 30 days
-        for (let i = 0; i < 20; i++) {
-            const daysAgo = Math.floor(Math.random() * 30);
-            const hoursAgo = Math.floor(Math.random() * 24);
-            const minutesAgo = Math.floor(Math.random() * 60);
+        // Create data for the last 14 days with at least one entry per day
+        // to ensure the chart has good data distribution
+        for (let i = 0; i < 30; i++) {
+            // Create 1-3 sessions per day to have good data density
+            const sessionsPerDay = 1 + Math.floor(Math.random() * 3);
             
-            const sessionDate = new Date(now);
-            sessionDate.setDate(sessionDate.getDate() - daysAgo);
-            sessionDate.setHours(sessionDate.getHours() - hoursAgo);
-            sessionDate.setMinutes(sessionDate.getMinutes() - minutesAgo);
-            
-            const maxForce = 10 + Math.random() * 5; // Random between 10-15
-            const avgForce = maxForce - 2 - Math.random() * 3; // Random avg less than max
-            
-            sessions.push({
-                id: `session-${i}`,
-                type: sessionTypes[Math.floor(Math.random() * sessionTypes.length)],
-                date: sessionDate.toISOString(),
-                duration: Math.floor(Math.random() * 20) + 5, // 5-25 minutes
-                maxForce: maxForce,
-                avgForce: avgForce,
-                strikes: Math.floor(Math.random() * 200) + 50, // 50-250 strikes
-                punchesPerMinute: Math.floor(Math.random() * 200) + 150, // 150-350 PPM
-                calories: Math.floor(Math.random() * 300) + 100, // 100-400 calories
-                won: Math.random() > 0.3 // 70% chance of winning
-            });
+            for (let j = 0; j < sessionsPerDay; j++) {
+                const daysAgo = i;
+                const hoursAgo = Math.floor(Math.random() * 24);
+                const minutesAgo = Math.floor(Math.random() * 60);
+                
+                const sessionDate = new Date(now);
+                sessionDate.setDate(sessionDate.getDate() - daysAgo);
+                sessionDate.setHours(sessionDate.getHours() - hoursAgo);
+                sessionDate.setMinutes(sessionDate.getMinutes() - minutesAgo);
+                
+                const maxForce = 10 + Math.random() * 5; // Random between 10-15
+                const avgForce = maxForce - 2 - Math.random() * 3; // Random avg less than max
+                
+                sessions.push({
+                    id: `session-${i}-${j}`,
+                    type: sessionTypes[Math.floor(Math.random() * sessionTypes.length)],
+                    date: sessionDate.toISOString(),
+                    duration: Math.floor(Math.random() * 20) + 5, // 5-25 minutes
+                    maxForce: maxForce,
+                    avgForce: avgForce,
+                    strikes: Math.floor(Math.random() * 200) + 50, // 50-250 strikes
+                    punchesPerMinute: Math.floor(Math.random() * 200) + 150, // 150-350 PPM
+                    calories: Math.floor(Math.random() * 300) + 100, // 100-400 calories
+                    won: Math.random() > 0.3 // 70% chance of winning
+                });
+            }
         }
         
         // Sort by date, most recent first
