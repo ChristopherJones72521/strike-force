@@ -325,11 +325,99 @@ class App {
         // Current date
         const now = new Date();
         
-        // Create data for the last 14 days with at least one entry per day
-        // to ensure the chart has good data distribution
-        for (let i = 0; i < 30; i++) {
-            // Create 1-3 sessions per day to have good data density
-            const sessionsPerDay = 1 + Math.floor(Math.random() * 3);
+        // Ensure we have at least one of each session type
+        const guaranteedSessions = [
+            // Arcade - Power
+            {
+                id: 'session-arcade-power',
+                type: 'Arcade',
+                subType: 'power',
+                date: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 10, 30).toISOString(),
+                duration: 1,
+                maxForce: 13.7,
+                avgForce: 10.2,
+                strikes: 5, // Few strikes = power type
+                punchesPerMinute: 60,
+                calories: 120,
+                won: true
+            },
+            // Arcade - Speed
+            {
+                id: 'session-arcade-speed',
+                type: 'Arcade',
+                subType: 'speed',
+                date: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2, 15, 45).toISOString(),
+                duration: 3,
+                maxForce: 9.8,
+                avgForce: 7.5,
+                strikes: 250, // Many strikes = speed type
+                punchesPerMinute: 300,
+                calories: 180,
+                won: true
+            },
+            // Challenge - Power
+            {
+                id: 'session-challenge-power',
+                type: 'Challenge',
+                subType: 'power',
+                date: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 3, 9, 15).toISOString(),
+                duration: 2,
+                maxForce: 14.2,
+                avgForce: 11.3,
+                strikes: 8, // Few strikes = power type
+                punchesPerMinute: 70,
+                calories: 150,
+                won: true
+            },
+            // Challenge - Speed
+            {
+                id: 'session-challenge-speed',
+                type: 'Challenge',
+                subType: 'speed',
+                date: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 4, 16, 20).toISOString(),
+                duration: 2,
+                maxForce: 10.4,
+                avgForce: 8.1,
+                strikes: 280, // Many strikes = speed type
+                punchesPerMinute: 320,
+                calories: 200,
+                won: false
+            },
+            // Fight
+            {
+                id: 'session-fight',
+                type: 'Fight',
+                date: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 5, 18, 0).toISOString(),
+                duration: 8,
+                maxForce: 12.8,
+                avgForce: 9.6,
+                strikes: 150,
+                punchesPerMinute: 160,
+                calories: 350,
+                won: true
+            },
+            // Fitness
+            {
+                id: 'session-fitness',
+                type: 'Fitness',
+                date: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 6, 7, 30).toISOString(),
+                duration: 25,
+                maxForce: 11.5,
+                avgForce: 8.8,
+                strikes: 320,
+                punchesPerMinute: 140,
+                calories: 450,
+                won: null
+            }
+        ];
+        
+        // Add guaranteed session types
+        sessions.push(...guaranteedSessions);
+        
+        // Create additional random data for the last 14 days
+        for (let i = 0; i < 20; i++) {
+            // Create 1-2 sessions per day for more variety
+            const sessionsPerDay = 1 + Math.floor(Math.random() * 2);
             
             for (let j = 0; j < sessionsPerDay; j++) {
                 const daysAgo = i;
@@ -341,20 +429,40 @@ class App {
                 sessionDate.setHours(sessionDate.getHours() - hoursAgo);
                 sessionDate.setMinutes(sessionDate.getMinutes() - minutesAgo);
                 
-                const maxForce = 10 + Math.random() * 5; // Random between 10-15
-                const avgForce = maxForce - 2 - Math.random() * 3; // Random avg less than max
+                const sessionType = sessionTypes[Math.floor(Math.random() * sessionTypes.length)];
+                const isPowerFocused = Math.random() > 0.5;
+                
+                // Set appropriate metrics based on session type and power/speed focus
+                let maxForce, avgForce, strikes, punchesPerMinute;
+                
+                if (isPowerFocused) {
+                    // Power-focused session (fewer strikes, higher force)
+                    maxForce = 11 + Math.random() * 5; // 11-16G
+                    avgForce = maxForce - 2 - Math.random() * 3;
+                    strikes = Math.floor(Math.random() * 50) + 5; // 5-55 strikes
+                    punchesPerMinute = Math.floor(Math.random() * 60) + 40; // 40-100 PPM
+                } else {
+                    // Speed-focused session (more strikes, lower force)
+                    maxForce = 8 + Math.random() * 4; // 8-12G
+                    avgForce = maxForce - 1 - Math.random() * 2;
+                    strikes = Math.floor(Math.random() * 200) + 100; // 100-300 strikes
+                    punchesPerMinute = Math.floor(Math.random() * 150) + 150; // 150-300 PPM
+                }
+                
+                const subType = isPowerFocused ? 'power' : 'speed';
                 
                 sessions.push({
                     id: `session-${i}-${j}`,
-                    type: sessionTypes[Math.floor(Math.random() * sessionTypes.length)],
+                    type: sessionType,
+                    subType: (sessionType === 'Arcade' || sessionType === 'Challenge') ? subType : null,
                     date: sessionDate.toISOString(),
                     duration: Math.floor(Math.random() * 20) + 5, // 5-25 minutes
                     maxForce: maxForce,
                     avgForce: avgForce,
-                    strikes: Math.floor(Math.random() * 200) + 50, // 50-250 strikes
-                    punchesPerMinute: Math.floor(Math.random() * 200) + 150, // 150-350 PPM
+                    strikes: strikes,
+                    punchesPerMinute: punchesPerMinute,
                     calories: Math.floor(Math.random() * 300) + 100, // 100-400 calories
-                    won: Math.random() > 0.3 // 70% chance of winning
+                    won: (sessionType === 'Fight' || sessionType === 'Challenge') ? (Math.random() > 0.3) : null // 70% chance of winning for Fight/Challenge
                 });
             }
         }

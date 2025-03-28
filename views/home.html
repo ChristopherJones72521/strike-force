@@ -78,15 +78,14 @@
                 <h2 class="text-xl font-bold pb-2 mb-2" style="background-image: linear-gradient(to right, #9F7AEA, #A78BFA); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; padding-right: 4px;">Recent sessions</h2>
                 <div class="w-20 h-px bg-gray-700"></div>
             </div>
-            <div class="card p-5">
-                <div class="recent-sessions-content">
-                    <sf-session-section></sf-session-section>
-                </div>
-                <div class="text-center mt-4">
-                    <a href="#/history" class="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium">View more session history</a>
-                </div>
+            <sf-session-section></sf-session-section>
+            <div class="text-center mt-4 mb-6">
+                <a href="#/history" class="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium">View more session history</a>
             </div>
         </div>
+
+        <!-- Bottom spacing to prevent nav overlap -->
+        <div class="h-20"></div>
     </div>
 </div>
 

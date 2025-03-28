@@ -59,14 +59,14 @@ class SFForceSection extends HTMLElement {
 
             .chart-container {
                 height: 200px;
-                margin: 0 0 1.5rem;
+                margin: 0 0 3rem;
                 width: 100%;
                 padding: 0;
             }
 
             .controls-container {
-                padding: 0.75rem 0 1.25rem;
-                margin-top: 0;
+                padding: 0 0 1.5rem;
+                margin-top: 1.5rem;
                 display: flex;
                 justify-content: center;
             }

@@ -14,36 +14,40 @@ class SFSegmentedControl extends HTMLElement {
             :host {
                 display: block;
                 width: 100%;
-                margin: 0;
-                padding-top: 0.5rem;
+                margin: 0 auto;
+                padding: 0;
             }
 
             .control {
-                display: grid;
-                grid-auto-flow: column;
-                grid-auto-columns: 1fr;
-                background: rgba(38, 38, 40, 0.8);
-                border-radius: 0.75rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(30, 30, 32, 0.8);
+                border-radius: 8px;
                 overflow: hidden;
-                width: 100%;
-                border: 1px solid rgba(255, 255, 255, 0.1);
+                width: 90%;
+                max-width: 350px;
+                margin: 0 auto;
+                padding: 4px;
                 position: relative;
             }
 
             ::slotted(button) {
+                flex: 1;
                 background: transparent;
                 border: none;
                 color: rgba(255, 255, 255, 0.6);
-                font-size: 0.9rem;
+                font-size: 0.875rem;
                 font-weight: 500;
-                padding: 0.6rem 0.375rem;
+                padding: 8px 12px;
                 cursor: pointer;
-                transition: all 0.15s;
+                transition: all 0.2s;
                 text-align: center;
                 white-space: nowrap;
                 position: relative;
                 overflow: hidden;
                 z-index: 2;
+                border-radius: 6px;
             }
 
             ::slotted(button:focus) {
@@ -57,12 +61,12 @@ class SFSegmentedControl extends HTMLElement {
 
             .selection-indicator {
                 position: absolute;
-                bottom: 0;
-                height: 2px;
-                background: #2979FF;
+                height: calc(100% - 8px);
+                top: 4px;
+                background: rgba(50, 50, 55, 0.85);
                 transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
-                border-radius: 2px 2px 0 0;
-                z-index: 2;
+                border-radius: 6px;
+                z-index: 1;
             }
         `;
 
