@@ -100,34 +100,16 @@
 <script type="module">
     import { SessionController } from '../scripts/sessionController.js';
     
-    let currentSession = null;
-
-    // Get session type from URL parameters or default to 'workout'
+    // Get session ID from URL parameters
     const urlParams = new URLSearchParams(window.location.search);
-    const sessionType = urlParams.get('type') || 'workout';
+    // Use 'id' as the parameter name, default to a sample ID if not provided for testing
+    const sessionId = urlParams.get('id') || 'sampleSession123'; 
 
-    // Initialize session
+    // Initialize session details view controller
     document.addEventListener('DOMContentLoaded', () => {
-        currentSession = new SessionController(sessionType);
-    });
-
-    // Expose control methods to window for button clicks
-    window.startSession = () => {
-        if (currentSession) {
-            currentSession.startRealtimeUpdates();
-        }
-    };
-
-    window.stopSession = () => {
-        if (currentSession) {
-            currentSession.stopRealtimeUpdates();
-        }
-    };
-
-    // Cleanup on page unload
-    window.addEventListener('unload', () => {
-        if (currentSession) {
-            currentSession.cleanup();
-        }
+        // The SessionController currently uses mock data internally, 
+        // but is initialized with the sessionId for potential future use (e.g., fetching real data)
+        new SessionController(sessionId); 
+        // No need to store the instance globally or add start/stop/cleanup for a details view.
     });
 </script>
