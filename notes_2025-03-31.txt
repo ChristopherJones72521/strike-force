@@ -1,0 +1,47 @@
+# Notes - 2025-03-31
+
+## Punch Detection Refinement (MotionManager.swift)
+
+*   **Goal:** Improve accuracy of peak acceleration (G-force) captured for each punch segment to better align with overall session peak and improve average calculations.
+*   **Implementation:**
+    *   Introduced a buffer (`currentPunchBuffer`) to store `CMAcceleration` data during a potential punch.
+    *   Implemented a counter (`belowThresholdCounter`) and limit (`belowThresholdLimit = 5`).
+    *   Punch segment processing is delayed until 5 consecutive readings are below the `punchThresholdG`.
+    *   The peak G for the segment (`segmentPeakG`) is now calculated by finding the max magnitude within the buffered data for that specific segment.
+*   **Results:**
+    *   Initial tests showed significant improvement. The peak G calculated from the buffer for the strongest punch segment now consistently matches the overall `sessionMaxAccelerationG`.
+    *   A controlled test throwing exactly 10 punches resulted in exactly 10 punches being detected by the new logic.
+    *   Occasional low-G detections (e.g., 5.61 Gs) were observed in earlier tests but not in the controlled 10-punch test. Decided against adding a minimum peak G threshold for now, as the current logic seems accurate for intended punches.
+*   **Status:** Changes committed (`feat: Improve punch detection accuracy in MotionManager`).
+
+## Potential Next Steps:
+
+*   Further testing across different punch types and intensities.
+*   Monitor for any recurrence of spurious low-G detections.
+*   Consider UI implications/updates based on the potentially more accurate average force values.
+*   Re-enable HealthKit integration once core logic is stable.
+
+## Haptic Feedback Integration (Ideas for Tomorrow)
+
+**User Notes:**
+
+*   **Countdown:** Distinct tap for 3, 2, 1; stronger for "Go!".
+*   **Punch Detection:** Brief, subtle confirmation on registration.
+*   **Session Start/Stop:** Clear signals for session begin/end (manual or timed).
+*   **Arcade Mode Completion:** Specific pattern on Arcade Power animation finish or Speed timer end.
+*   **(Advanced) Intensity Feedback:** Potential for varying intensity based on force (might be complex).
+*   **Implementation:** Use `WKInterfaceDevice.current().play(_:)` with `WKHapticType`.
+
+**Cline's Implementation Thoughts:**
+
+*   **Placement:** Agreed, the suggested points cover key interactions.
+*   **Helper Function:** Create `private func playHaptic(_ type: WKHapticType)` in `MotionManager` to centralize calls and keep logic clean. Ensure `WatchKit` is imported.
+*   **Countdown:** Use `.click` for numbers, `.start` or `.success` for "Go!" within the countdown timer logic in `startSession`.
+*   **Punch Detection:** Call `playHaptic(.click)` within the `DispatchQueue.main.async` block in `processAccelerometerData` right after a valid punch is confirmed and sent to the publisher.
+*   **Session Start:** Call `playHaptic(.start)` when state transitions to `.running`.
+*   **Session Stop/End:**
+    *   Call `playHaptic(.stop)` when `stopSession()` is initiated (state becomes `.finishing`).
+    *   Call `playHaptic(.success)` when `finishWorkout()` successfully completes and publishes the session (state becomes `.ended` or remains `.finishing` for power mode before UI call).
+*   **Arcade Completion:** Call `playHaptic(.notification)` or `.success` within the timer/DispatchWorkItem completion blocks that trigger `stopSession` for Arcade Speed/Power modes.
+*   **Intensity Feedback:** Start simple. Direct mapping is complex. Could later explore tiered feedback (e.g., `.click` for normal, `.directionUp` for strong punches > threshold), but requires careful tuning. Focus on event-based haptics first.
+*   **Threading:** Ensure all `playHaptic` calls happen on the main thread, likely within existing `DispatchQueue.main.async` blocks where state changes or events occur.
