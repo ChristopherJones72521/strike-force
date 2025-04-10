@@ -1,0 +1,54 @@
+# Session Notes - 2025-04-08
+
+## Summary of Progress:
+
+1.  **Watch Connectivity Refinement:**
+    *   Successfully implemented robust background transfer (`transferUserInfo`) for Challenge Contact, Share Session, and Share Result actions initiated from the Watch.
+    *   Added local notifications on iOS to alert the user about pending actions queued via `transferUserInfo`.
+    *   Implemented logic in `WatchManager` and `ContentView` to immediately trigger UI (iMessage/Share sheet) if the iOS app is already active when the `userInfo` arrives.
+    *   Fixed Watch feedback: Temporary labels ("Queued...", "Sent...") now appear correctly on the `EndedSessionView` buttons using `.overlay`.
+    *   Resolved background thread warnings in `WatchManager` by dispatching publisher signals to the main thread.
+    *   Corrected iMessage sheet dismissal logic in `ContentView`.
+
+2.  **Onboarding Flow Implementation:**
+    *   Created the basic multi-page structure using `TabView` in `OnboardingView.swift`.
+    *   Implemented the "Sign in with Apple" authentication flow using `AuthenticationServices`.
+    *   Created the Profile Input page, collecting Age and Weight.
+    *   Integrated HealthKit authorization requests and data fetching (Age from DOB, Weight) on the Profile Input page.
+    *   Added placeholder pages for Mode Explanation, User Goals, and TOS/Finish.
+    *   Created `KeychainHelper.swift` for secure storage.
+    *   Implemented `saveOnboardingData` function to save the Apple User ID to Keychain and other profile data (Age, Weight, Goal, Email, Name) to the `UserProfileEntity` in Core Data upon onboarding completion.
+    *   Added `UserProfileEntity` to the Core Data model (manual step).
+
+3.  **App Structure:**
+    *   Created placeholder views `SettingsView.swift` and `LeaderboardView.swift`.
+    *   Updated `MainTabView.swift` to include these views, completing the basic tab structure.
+
+4.  **Universal Link Setup (Client-Side):**
+    *   Added the `com.apple.developer.associated-domains` entitlement with `applinks:strike-force.app`.
+    *   Implemented `.onOpenURL` modifier and `handleIncomingURL` function in `StrikeForcePrototypeApp.swift` to parse incoming challenge URLs (`https://strike-force.app/challenge?id=...`) and store parameters in `UserDefaults` / post a `NotificationCenter` notification.
+
+## Next Steps:
+
+1.  **Challenge Acceptance Logic:**
+    *   Implement the code that *reacts* to the parsed Universal Link data stored in `UserDefaults` or received via the `didReceiveChallengeLink` notification.
+    *   This likely involves adding logic to `HomeView` or a dedicated manager to:
+        *   Check if the user is logged in (using `KeychainHelper.loadString()`).
+        *   If logged in, present the challenge details (e.g., using an alert or a dedicated UI).
+        *   If accepted, potentially send a message to the Watch to initiate the correct Arcade mode with the challenger's score.
+        *   If not logged in, decide how to handle/store the pending challenge until after login/onboarding.
+
+2.  **UI Polish & Refinements:**
+    *   Implement actual charts/visualizations in `SessionDetailView`.
+    *   Add animations (e.g., arcade counter for Power mode score).
+    *   Refine layouts and overall visual design based on mockups/preferences.
+    *   Add unit selection (kg/lbs, cm/ft+in) to profile input/display.
+
+## Deferred / Lower Priority:
+
+*   Implement Email/Password authentication flow.
+*   Implement Google Sign-In flow.
+*   Flesh out `SettingsView` and `LeaderboardView` functionality.
+*   Implement photo upload/display for profile.
+*   Full backend integration for accounts, leaderboards, etc.
+*   Address TODOs regarding Keychain usage in `saveOnboardingData` fetch predicate.
