@@ -1,0 +1,41 @@
+# Session Notes - 2025-04-10
+
+## Summary of Progress:
+
+1.  **Build & Configuration Fixes:**
+    *   Resolved numerous build errors caused by files existing on disk but not being added to the Xcode project/target membership (Views, Helpers, Extensions, Styling). Manually added necessary files.
+    *   Diagnosed and fixed the root cause of the app launching into the old `ContentView` instead of `OnboardingView`: Removed an erroneous reference to the deleted `ContentView.swift` from the target's "Compile Sources" build phase after confirming other settings (Main Interface, Info.plist Scene Config) were correct.
+    *   Fixed HealthKit integration crash by adding the "HealthKit" capability and the required `NSHealthShareUsageDescription` / `NSHealthUpdateUsageDescription` keys to the Info settings.
+    *   Resolved provisioning profile error related to "Associated Domains" by removing the capability (as it's not supported by Personal Teams). Universal Links are deferred.
+    *   Fixed Core Data crash during onboarding save by correctly converting/using the user ID string as a `UUID` object in the fetch predicate.
+
+2.  **Onboarding & Login:**
+    *   Implemented a basic `EmailSignUpView` presented as a sheet from `AuthOptionsPageView`.
+    *   This flow generates a UUID, saves it to Keychain via `KeychainHelper`, and allows the user to complete onboarding, providing a workaround for the persistent "Sign in with Apple" error (Code 1000).
+
+3.  **Watch Connectivity & UI Triggers:**
+    *   Fixed the immediate UI triggers (Challenge alert, Share sheets) in `MainTabView` for when the app is already open. Added missing `@State` variables (`itemToShare`, `challengeResultToShare`), the `ShareableItem` struct, an `@ObservedObject` for `WatchManager`, and the necessary `.sheet` modifiers.
+    *   Added `.onChange(of: scenePhase)` to `MainTabView` to ensure pending actions from `UserDefaults` are checked when the app becomes active.
+    *   Confirmed background transfer + notification flow works for Share/Challenge, and the immediate flow now works correctly when logged in (via Email Sign Up).
+
+4.  **Consistent Styling:**
+    *   Created reusable `GradientBackgroundModifier` and `CardModifier` in `Shared/Styling.swift`.
+    *   Refactored `HomeView` to use these modifiers and match the mockup's dark theme (gradient, header, card stats, card list rows). Added Avg Force calculation.
+    *   Applied the gradient background and adjusted list/text colors to `HistoryView`, `SessionDetailView`, `SettingsView`, and `LeaderboardView` for a consistent appearance. Resolved issues with applying modifiers to `List` views by using a `ZStack` background approach where necessary.
+
+## Next Steps:
+
+1.  **UI Polish & Refinement:**
+    *   Implement the chart and segmented controls in `HomeView`.
+    *   Implement the enhanced Arcade Power mode animation on the Watch (`ArcadePowerAnimatingView`).
+    *   Implement the share button action in the `HomeView` recent activity list.
+    *   Implement navigation from the profile button in `HomeView`.
+    *   General layout adjustments and refinement based on mockups.
+2.  **Authentication:**
+    *   Implement the Email/Password **Login** flow (complementary to the Sign Up).
+    *   (Optional) Further investigate the Sign in with Apple Error 1000.
+    *   (Deferred) Implement Google Sign-In.
+3.  **Placeholder Views:**
+    *   Flesh out the functionality in `SettingsView` and `LeaderboardView`.
+4.  **Universal Links:**
+    *   Requires server-side AASA file setup and a paid developer account to fully test challenge link acceptance.
