@@ -1,0 +1,32 @@
+# Session Notes - 2025-04-11
+
+## Summary of Progress:
+
+1.  **Styling Consistency:**
+    *   Addressed user feedback that the dark theme styling (gradient background, card styles) was only visible on `HomeView`.
+    *   Diagnosed the issue: The `.gradientBackground()` modifier wasn't working correctly when applied directly to `List` views.
+    *   Refactored `HistoryView`, `SessionDetailView`, `SettingsView`, and `LeaderboardView` to use a `ZStack` containing the `LinearGradient` and the `List`/`ScrollView`, mirroring the successful pattern in `HomeView`.
+    *   Ensured `Styling.swift` (containing the reusable modifiers) was correctly added to the target membership.
+    *   All main views should now consistently display the dark gradient background and use appropriate text/row colors.
+
+2.  **Watch Connectivity Flow Confirmation:**
+    *   Confirmed via testing and logs that the background transfer (`transferUserInfo`) and immediate handling (`checkPending...` publishers -> `checkForPending...` functions) for Challenge and Share actions are working correctly *when the user is logged in* (currently via the Email Sign Up workaround).
+
+## Next Steps (from previous plan):
+
+1.  **iOS Session Handling & Display:**
+    *   Implement Share Actions: Wire up the placeholder share buttons in `HomeView` (recent list) and `SessionDetailView` to present `ActivityView`.
+    *   Enhance Detail View: Add more relevant data points (e.g., Avg/Max Acceleration).
+    *   (Optional): Add mini-charts or improved formatting to `HistoryView` rows.
+2.  **UI Polish & Refinement:**
+    *   Home View Chart: Implement segmented control logic (Force/Count, Peak/Avg) and refine `chartData` calculation.
+    *   Watch Animation: Implement enhanced Arcade Power mode score animation.
+    *   Profile Navigation: Implement `HomeView` profile button action.
+3.  **Authentication:**
+    *   Implement Email/Password **Login** flow.
+4.  **Placeholder Views:**
+    *   Flesh out `SettingsView` and `LeaderboardView` functionality.
+5.  **Deferred/Optional:**
+    *   Investigate Sign in with Apple error.
+    *   Google Sign-In.
+    *   Universal Link server setup.
