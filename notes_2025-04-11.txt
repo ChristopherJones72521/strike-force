@@ -10,7 +10,12 @@
     *   All main views should now consistently display the dark gradient background and use appropriate text/row colors.
 
 2.  **Watch Connectivity Flow Confirmation:**
-    *   Confirmed via testing and logs that the background transfer (`transferUserInfo`) and immediate handling (`checkPending...` publishers -> `checkForPending...` functions) for Challenge and Share actions are working correctly *when the user is logged in* (currently via the Email Sign Up workaround).
+    *   Confirmed via testing and logs that the background transfer (`transferUserInfo`) and immediate handling (`checkPending...` publishers -> `checkForPending...` functions) for Challenge and Share actions are working correctly *when the user is logged in* (currently via the Email Sign Up workaround). The reason UI wasn't appearing previously for Share/Challenge when the app was open was due to the login check failing before Email Sign Up was implemented.
+
+3.  **Home View Chart/Segments:**
+    *   Added segmented controls (`Picker` views) for "Metric" (Force/Count) and "Timeframe" (Peak/Avg) to `HomeView`.
+    *   Added basic SwiftUI `Chart` view placeholder.
+    *   Implemented initial `chartData` computed property to filter sessions for the last 7 days and calculate Peak Force (Gs) or Peak Count per session for display in the chart.
 
 ## Next Steps (from previous plan):
 
@@ -19,11 +24,11 @@
     *   Enhance Detail View: Add more relevant data points (e.g., Avg/Max Acceleration).
     *   (Optional): Add mini-charts or improved formatting to `HistoryView` rows.
 2.  **UI Polish & Refinement:**
-    *   Home View Chart: Implement segmented control logic (Force/Count, Peak/Avg) and refine `chartData` calculation.
+    *   Home View Chart: Implement the segmented control logic fully in `chartData` to switch between Force/Count and Peak/Avg. Refine data aggregation (e.g., proper daily aggregation for Avg). Style chart axes/labels.
     *   Watch Animation: Implement enhanced Arcade Power mode score animation.
     *   Profile Navigation: Implement `HomeView` profile button action.
 3.  **Authentication:**
-    *   Implement Email/Password **Login** flow.
+    *   Implement the Email/Password **Login** flow.
 4.  **Placeholder Views:**
     *   Flesh out `SettingsView` and `LeaderboardView` functionality.
 5.  **Deferred/Optional:**
