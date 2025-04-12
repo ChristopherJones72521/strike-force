@@ -1,21 +1,38 @@
-# Session Notes - 2025-04-11
+# Session Notes - 2025-04-11 (Updated)
 
 ## Summary of Progress:
 
-1.  **Styling Consistency:**
-    *   Addressed user feedback that the dark theme styling (gradient background, card styles) was only visible on `HomeView`.
-    *   Diagnosed the issue: The `.gradientBackground()` modifier wasn't working correctly when applied directly to `List` views.
-    *   Refactored `HistoryView`, `SessionDetailView`, `SettingsView`, and `LeaderboardView` to use a `ZStack` containing the `LinearGradient` and the `List`/`ScrollView`, mirroring the successful pattern in `HomeView`.
-    *   Ensured `Styling.swift` (containing the reusable modifiers) was correctly added to the target membership.
-    *   All main views should now consistently display the dark gradient background and use appropriate text/row colors.
+1.  **Build & Configuration Fixes:**
+    *   Resolved numerous build errors caused by files existing on disk but not being added to the Xcode project/target membership (Views, Helpers, Extensions, Styling). Manually added necessary files.
+    *   Diagnosed and fixed the root cause of the app launching into the old `ContentView` instead of `OnboardingView`: Removed an erroneous reference to the deleted `ContentView.swift` from the target's "Compile Sources" build phase after confirming other settings (Main Interface, Info.plist Scene Config) were correct.
+    *   Fixed HealthKit integration crash by adding the "HealthKit" capability and the required `NSHealthShareUsageDescription` / `NSHealthUpdateUsageDescription` keys to the Info settings.
+    *   Resolved provisioning profile error related to "Associated Domains" by removing the capability (as it's not supported by Personal Teams). Universal Links are deferred.
+    *   Fixed Core Data crash during onboarding save by correctly converting/using the user ID string as a `UUID` object in the fetch predicate.
 
-2.  **Watch Connectivity Flow Confirmation:**
-    *   Confirmed via testing and logs that the background transfer (`transferUserInfo`) and immediate handling (`checkPending...` publishers -> `checkForPending...` functions) for Challenge and Share actions are working correctly *when the user is logged in* (currently via the Email Sign Up workaround). The reason UI wasn't appearing previously for Share/Challenge when the app was open was due to the login check failing before Email Sign Up was implemented.
+2.  **Onboarding & Login:**
+    *   Implemented a basic `EmailSignUpView` presented as a sheet from `AuthOptionsPageView`.
+    *   This flow generates a UUID, saves it to Keychain via `KeychainHelper`, and allows the user to complete onboarding, providing a workaround for the persistent "Sign in with Apple" error (Code 1000).
 
-3.  **Home View Chart/Segments:**
-    *   Added segmented controls (`Picker` views) for "Metric" (Force/Count) and "Timeframe" (Peak/Avg) to `HomeView`.
-    *   Added basic SwiftUI `Chart` view placeholder.
-    *   Implemented initial `chartData` computed property to filter sessions for the last 7 days and calculate Peak Force (Gs) or Peak Count per session for display in the chart.
+3.  **Watch Connectivity & UI Triggers:**
+    *   Fixed the immediate UI triggers (Challenge alert, Share sheets) in `MainTabView` for when the app is already open. Added missing `@State` variables (`itemToShare`, `challengeResultToShare`), the `ShareableItem` struct, an `@ObservedObject` for `WatchManager`, the necessary `.sheet` modifiers, and the check functions (`checkForPending...`).
+    *   Added `.onChange(of: scenePhase)` to `MainTabView` to ensure pending actions from `UserDefaults` are checked when the app becomes active.
+    *   Confirmed background transfer + notification flow works for Share/Challenge, and the immediate flow now works correctly when logged in (via Email Sign Up).
+
+4.  **Session Data Transfer:**
+    *   Diagnosed and fixed the issue where completed session data was not being sent from the Watch to the iOS app.
+    *   Changed the Watch `MotionManager.sessionPublisher` from `PassthroughSubject` to `CurrentValueSubject` to ensure the `EndedSessionView` receives the last published session even if it subscribes slightly late.
+    *   Added safe unwrapping for the optional `Session?` received in `EndedSessionView.onReceive`.
+    *   Confirmed via testing and logs that session data is now correctly sent from the Watch, received and decoded by the iOS app, saved to Core Data, and displayed in the UI.
+
+5.  **Consistent Styling:**
+    *   Created reusable `GradientBackgroundModifier` and `CardModifier` in `Shared/Styling.swift`.
+    *   Refactored `HomeView` to use these modifiers and match the mockup's dark theme (gradient, header, card stats, card list rows). Added Avg Force calculation.
+    *   Applied the gradient background and adjusted list/text colors to `HistoryView`, `SessionDetailView`, `SettingsView`, and `LeaderboardView` for a consistent appearance, using a `ZStack` approach for List-based views.
+
+6.  **Home View Chart:**
+    *   Added segmented controls for Metric (Force/Count) and Timeframe (Peak/Avg).
+    *   Added a basic SwiftUI Chart using `LineMark` and `PointMark`.
+    *   Implemented initial `chartData` computed property to display Peak Force (Gs) or Peak Count for the last 7 days.
 
 ## Next Steps (from previous plan):
 
@@ -24,11 +41,11 @@
     *   Enhance Detail View: Add more relevant data points (e.g., Avg/Max Acceleration).
     *   (Optional): Add mini-charts or improved formatting to `HistoryView` rows.
 2.  **UI Polish & Refinement:**
-    *   Home View Chart: Implement the segmented control logic fully in `chartData` to switch between Force/Count and Peak/Avg. Refine data aggregation (e.g., proper daily aggregation for Avg). Style chart axes/labels.
+    *   Home View Chart: Refine `chartData` calculation (e.g., proper daily aggregation for Avg Force/Count). Style chart axes/labels.
     *   Watch Animation: Implement enhanced Arcade Power mode score animation.
     *   Profile Navigation: Implement `HomeView` profile button action.
 3.  **Authentication:**
-    *   Implement the Email/Password **Login** flow.
+    *   Implement Email/Password **Login** flow.
 4.  **Placeholder Views:**
     *   Flesh out `SettingsView` and `LeaderboardView` functionality.
 5.  **Deferred/Optional:**
