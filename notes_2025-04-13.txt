@@ -1,0 +1,42 @@
+# Session Notes - 2025-04-13
+
+## Summary of Progress:
+
+1.  **Centralized Configuration:**
+    *   Created `native-app/StrikeForcePrototype/Shared/AppConfig.swift`.
+    *   Moved constants (physics factors, thresholds, durations, feature flags) from Watch `MotionManager.swift` to `AppConfig.swift`.
+    *   Updated `MotionManager.swift` to reference constants from `AppConfig`.
+    *   Ensured `AppConfig.swift` was added to the project and included in both iOS and Watch App targets, resolving build errors.
+
+2.  **Architecture Documentation:**
+    *   Created `ARCHITECTURE.md` in the project root.
+    *   Added initial documentation outlining key components (Shared, iOS, Watch) and data flows (Session Saving, Sharing from Watch).
+
+3.  **Styling Consistency (Verification & Fix):**
+    *   Addressed user feedback that background styling wasn't applying consistently to all views despite previous fixes.
+    *   Reverted `SessionDetailView`, `SettingsView`, and `LeaderboardView` from using `List` back to using a `ScrollView` containing `VStack`s, applying the `.gradientBackground()` modifier to the `ScrollView`.
+    *   Confirmed this resolved the visual inconsistency.
+
+4.  **Code Cleanup:**
+    *   Verified consistent use of `.cardStyle()` modifier in `HomeView`, `HistoryView`, `SessionDetailView`, `SettingsView`, `LeaderboardView`.
+    *   Fixed build error in `ArcadePowerAnimatingView` related to complex expression by breaking down the calculation.
+    *   Removed extensive debugging logs added previously to Watch `MotionManager` and `ContentView`.
+
+## Next Steps (from previous plan):
+
+1.  **iOS Session Handling & Display:**
+    *   Implement Share Actions: Wire up the placeholder share buttons in `HomeView` (recent list) and `SessionDetailView` to present `ActivityView`. (Partially done - callback mechanism implemented, UI actions added).
+    *   Enhance Detail View: Add more relevant data points (e.g., Avg/Max Acceleration).
+    *   (Optional): Add mini-charts or improved formatting to `HistoryView` rows.
+2.  **UI Polish & Refinement:**
+    *   Home View Chart: Refine `chartData` calculation (e.g., proper daily aggregation for Avg Force/Count). Style chart axes/labels.
+    *   Watch Animation: Implement enhanced Arcade Power mode score animation.
+    *   Profile Navigation: Implement `HomeView` profile button action.
+3.  **Authentication:**
+    *   Implement Email/Password **Login** flow.
+4.  **Placeholder Views:**
+    *   Flesh out `SettingsView` and `LeaderboardView` functionality.
+5.  **Deferred/Optional:**
+    *   Investigate Sign in with Apple error.
+    *   Google Sign-In.
+    *   Universal Link server setup.
